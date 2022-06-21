@@ -25,7 +25,14 @@ import kotlin.math.absoluteValue
  * Description:
  * Author: CSC
  */
-
+/**
+ *
+ *
+ * @param modifier
+ * @param pageCount 轮播页数
+ * @param waitingTime 轮播间隔
+ * @param content 轮播内容
+ */
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun Banner(
