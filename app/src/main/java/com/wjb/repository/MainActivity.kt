@@ -10,10 +10,12 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -75,6 +77,13 @@ class MainActivity : ComponentActivity() {
                     Text(text = "RotationSample")
                 }
             }
+            item {
+                Button(modifier = Modifier.fillMaxWidth(), onClick = {
+                    navController.navigate(route = RouteConfig.ROUTE_BANNER)
+                }) {
+                    Text(text = "BannerSample")
+                }
+            }
 
         }
     }
@@ -123,17 +132,45 @@ class MainActivity : ComponentActivity() {
                 }) {
                 RotationSample(navController)
             }
+            composable(RouteConfig.ROUTE_BANNER,
+                enterTransition = {
+                    fadeIn(animationSpec = tween(500))
+                },
+                exitTransition = {
+                    fadeOut(animationSpec = tween(500))
+                }) {
+                BannerSample(navController)
+            }
         }
     }
 
     @OptIn(ExperimentalPagerApi::class)
     @Composable
+    fun BannerSample(navController: NavHostController) {
+        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Banner(
+                pageCount = 3,
+                modifier = Modifier
+                    .size(200.dp, 100.dp)
+                    .clip(RoundedCornerShape(10.dp))
+                    .background(Color.LightGray)
+            ) {
+                Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text(text = it.toString())
+                }
+            }
+        }
+
+    }
+
+    @OptIn(ExperimentalPagerApi::class)
+    @Composable
     private fun RotationSample(navController: NavHostController) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Banner(
                 modifier = Modifier
-                    .size(200.dp,100.dp),
-                pageCount =6
+                    .size(200.dp, 100.dp),
+                pageCount = 6
             ) {
                 when (it) {
                     0 -> Box(
@@ -190,7 +227,8 @@ class MainActivity : ComponentActivity() {
         Column(
             Modifier
                 .fillMaxSize()
-                .padding(top = 10.dp)) {
+                .padding(top = 10.dp)
+        ) {
             val pagerState = rememberPagerState(2)
             val scope = rememberCoroutineScope()
             val list = listOf("选项1", "选项2", "选项3", "选项4", "选项5")

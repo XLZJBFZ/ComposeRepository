@@ -119,10 +119,10 @@ private fun Int.floorMod(other: Int): Int = when (other) {
 @OptIn(ExperimentalPagerApi::class)
 @Preview(showBackground = true)
 @Composable
-private fun PreviewRotation() {
+private fun PreviewBanner() {
     Banner(
         modifier = Modifier
-            .fillMaxWidth()
+            .width(200.dp)
             .height(100.dp),
         pageCount = 6
     ) {
