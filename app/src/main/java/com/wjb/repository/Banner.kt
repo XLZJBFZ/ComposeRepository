@@ -29,14 +29,16 @@ import kotlin.math.absoluteValue
  *
  *
  * @param modifier
+ * @param indicatorColor 指示器的颜色，默认红色
  * @param pageCount 轮播页数
- * @param waitingTime 轮播间隔
+ * @param waitingTime 轮播间隔，默认两秒
  * @param content 轮播内容
  */
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun Banner(
     modifier: Modifier = Modifier,
+    indicatorColor:Color=Color.Red,
     pageCount: Int,
     waitingTime: Long = 2000L,
     content: @Composable PagerScope.(page: Int) -> Unit
@@ -96,7 +98,7 @@ fun Banner(
                     modifier = Modifier
                         .size(4.dp)
                         .clip(CircleShape)
-                        .background(if (it == currentPage) Color.Red else Color.White)
+                        .background(if (it == currentPage) indicatorColor else Color.White)
                 )
                 Spacer(modifier = Modifier.size(4.dp))
             }
