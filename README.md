@@ -11,4 +11,6 @@ Compose控件仓库
 
 带指示器的顶部导航，可以配合HorizontalPager使用
 
+# FadeEdge
 
+边缘淡化，可以配合LazyRow，LazyColumn使用
