@@ -45,6 +45,13 @@ fun PreviewFadeEdge() {
 
 }
 
+/**
+ *
+ *
+ * @param fadeWidth 淡化的距离
+ * @param edgeColor 淡化颜色
+ * @return
+ */
 fun Modifier.horizontalFadeEdge(fadeWidth: Dp = 10.dp, edgeColor: Color = Color.White) =
     this.then(drawWithContent {
         drawContent()
@@ -64,6 +71,13 @@ fun Modifier.horizontalFadeEdge(fadeWidth: Dp = 10.dp, edgeColor: Color = Color.
         )
     })
 
+/**
+ *
+ *
+ * @param fadeHeight 淡化的距离
+ * @param edgeColor 淡化颜色
+ * @return
+ */
 fun Modifier.verticalFadeEdge(fadeHeight: Dp = 10.dp, edgeColor: Color = Color.White) =
     this.then(drawWithContent {
         drawContent()
