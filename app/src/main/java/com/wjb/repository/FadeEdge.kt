@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 /**
- * ClassName: Test
+ * ClassName: FadeEdge
  * Description:
  * Author: CSC
  */
