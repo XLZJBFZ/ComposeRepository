@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -29,6 +30,7 @@ import kotlin.math.absoluteValue
  *
  *
  * @param modifier
+ * @param indicatorSize 指示器的大小，默认4dp
  * @param indicatorColor 指示器的颜色，默认红色
  * @param pageCount 轮播页数
  * @param waitingTime 轮播间隔，默认两秒
@@ -38,6 +40,7 @@ import kotlin.math.absoluteValue
 @Composable
 fun Banner(
     modifier: Modifier = Modifier,
+    indicatorSize: Dp =4.dp,
     indicatorColor:Color=Color.Red,
     pageCount: Int,
     waitingTime: Long = 2000L,
@@ -96,11 +99,14 @@ fun Banner(
             repeat(pageCount) {
                 Spacer(
                     modifier = Modifier
-                        .size(4.dp)
+                        .size(indicatorSize)
                         .clip(CircleShape)
                         .background(if (it == currentPage) indicatorColor else Color.White)
                 )
-                Spacer(modifier = Modifier.size(4.dp))
+                if(it!=pageCount-1){
+                    Spacer(modifier = Modifier.size(indicatorSize))
+                }
+
             }
         }
     }
