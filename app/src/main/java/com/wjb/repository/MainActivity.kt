@@ -158,7 +158,6 @@ class MainActivity : ComponentActivity() {
         val scope = rememberCoroutineScope()
         val list = listOf("选项1", "选项2", "选项3", "选项4", "选项5")
         HideTopWhenScroll(topSize = 40.dp, topContent = {
-
             NavigationWithIndicator(
                 backgroundColor = Color.Red,
                 size = 40.dp,

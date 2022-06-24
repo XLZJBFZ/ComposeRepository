@@ -14,3 +14,7 @@ Compose控件仓库
 # FadeEdge
 
 边缘淡化，可以配合LazyRow，LazyColumn使用
+
+# HideTopWhenScroll
+
+向下滑动是隐藏，向上滑动时显示的头部，可以配合LazyColumn使用，Sample还配合了NavigationWithIndicator
