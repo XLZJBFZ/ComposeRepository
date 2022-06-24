@@ -12,6 +12,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -87,6 +88,13 @@ class MainActivity : ComponentActivity() {
             }
             item {
                 Button(modifier = Modifier.fillMaxWidth(), onClick = {
+                    navController.navigate(route = RouteConfig.ROUTE_FADE_EDGE)
+                }) {
+                    Text(text = "FadeEdgeSample")
+                }
+            }
+            item {
+                Button(modifier = Modifier.fillMaxWidth(), onClick = {
                     navController.navigate(route = RouteConfig.ROUTE_HIDE_TOP_WHEN_SCROLL)
                 }) {
                     Text(text = "HideTopWhenScrollSample")
@@ -139,6 +147,15 @@ class MainActivity : ComponentActivity() {
                 }) {
                 BannerSample(navController)
             }
+            composable(RouteConfig.ROUTE_FADE_EDGE,
+                enterTransition = {
+                    fadeIn(animationSpec = tween(500))
+                },
+                exitTransition = {
+                    fadeOut(animationSpec = tween(500))
+                }) {
+                FadeEdgeSample(navController)
+            }
             composable(RouteConfig.ROUTE_HIDE_TOP_WHEN_SCROLL,
                 enterTransition = {
                     fadeIn(animationSpec = tween(500))
@@ -147,6 +164,17 @@ class MainActivity : ComponentActivity() {
                     fadeOut(animationSpec = tween(500))
                 }) {
                 HideTopWhenScrollSample(navController)
+            }
+        }
+    }
+
+    @Composable
+    private fun FadeEdgeSample(navController: NavHostController) {
+        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            LazyRow(Modifier.fillMaxWidth().horizontalFadeEdge(fadeWidth = 50.dp)){
+                items(20){
+                    Text(text = it.toString(),modifier=Modifier.width(50.dp))
+                }
             }
         }
     }
