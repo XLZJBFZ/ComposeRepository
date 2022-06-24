@@ -11,5 +11,6 @@ object RouteConfig {
     const val ROUTE_NAVIGATION_WITH_INDICATOR="NavigationWithIndicator"
     const val ROUTE_ROTATION="Rotation"
     const val ROUTE_BANNER="Banner"
+    const val ROUTE_HIDE_TOP_WHEN_SCROLL="HideTopWhenScroll"
 
 }

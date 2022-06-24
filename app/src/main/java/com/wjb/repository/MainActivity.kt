@@ -7,11 +7,18 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Download
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.MyLocation
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,6 +35,7 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
+import com.wjb.repository.ui.theme.Purple40
 import com.wjb.repository.ui.theme.RepositoryTheme
 import kotlinx.coroutines.delay
 
@@ -72,19 +80,18 @@ class MainActivity : ComponentActivity() {
             }
             item {
                 Button(modifier = Modifier.fillMaxWidth(), onClick = {
-                    navController.navigate(route = RouteConfig.ROUTE_ROTATION)
-                }) {
-                    Text(text = "RotationSample")
-                }
-            }
-            item {
-                Button(modifier = Modifier.fillMaxWidth(), onClick = {
                     navController.navigate(route = RouteConfig.ROUTE_BANNER)
                 }) {
                     Text(text = "BannerSample")
                 }
             }
-
+            item {
+                Button(modifier = Modifier.fillMaxWidth(), onClick = {
+                    navController.navigate(route = RouteConfig.ROUTE_HIDE_TOP_WHEN_SCROLL)
+                }) {
+                    Text(text = "HideTopWhenScrollSample")
+                }
+            }
         }
     }
 
@@ -123,15 +130,6 @@ class MainActivity : ComponentActivity() {
                 }) {
                 NavigationWithIndicatorSample(navController)
             }
-            composable(RouteConfig.ROUTE_ROTATION,
-                enterTransition = {
-                    fadeIn(animationSpec = tween(500))
-                },
-                exitTransition = {
-                    fadeOut(animationSpec = tween(500))
-                }) {
-                RotationSample(navController)
-            }
             composable(RouteConfig.ROUTE_BANNER,
                 enterTransition = {
                     fadeIn(animationSpec = tween(500))
@@ -141,6 +139,47 @@ class MainActivity : ComponentActivity() {
                 }) {
                 BannerSample(navController)
             }
+            composable(RouteConfig.ROUTE_HIDE_TOP_WHEN_SCROLL,
+                enterTransition = {
+                    fadeIn(animationSpec = tween(500))
+                },
+                exitTransition = {
+                    fadeOut(animationSpec = tween(500))
+                }) {
+                HideTopWhenScrollSample(navController)
+            }
+        }
+    }
+
+    @OptIn(ExperimentalPagerApi::class)
+    @Composable
+    private fun HideTopWhenScrollSample(navController: NavHostController) {
+        val pagerState = rememberPagerState(2)
+        val scope = rememberCoroutineScope()
+        val list = listOf("选项1", "选项2", "选项3", "选项4", "选项5")
+        HideTopWhenScroll(topSize = 40.dp, topContent = {
+
+            NavigationWithIndicator(
+                backgroundColor = Color.Red,
+                size = 40.dp,
+                titleList = list,
+                pagerState = pagerState,
+                scope = scope,
+            )
+        }) { paddingValues ->
+            HorizontalPager(count = list.size, state = pagerState) {
+                LazyColumn(contentPadding = paddingValues) {
+                    items(100) { index ->
+                        androidx.compose.material3.Text(
+                            "I'm item $index", modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp)
+                        )
+                    }
+                }
+
+            }
+
         }
     }
 
@@ -162,64 +201,6 @@ class MainActivity : ComponentActivity() {
         }
 
     }
-
-    @OptIn(ExperimentalPagerApi::class)
-    @Composable
-    private fun RotationSample(navController: NavHostController) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Banner(
-                modifier = Modifier
-                    .size(200.dp, 100.dp),
-                pageCount = 6
-            ) {
-                when (it) {
-                    0 -> Box(
-                        Modifier
-                            .fillMaxSize()
-                            .background(Color.Green.copy(alpha = 0.5f)),
-                        contentAlignment = Alignment.Center
-                    ) { Text("第一张图") }
-                    1 -> Box(
-                        Modifier
-                            .fillMaxSize()
-                            .background(Color.Blue.copy(alpha = 0.5f)),
-                        contentAlignment = Alignment.Center
-                    ) { Text("第二张图") }
-                    2 -> Box(
-                        Modifier
-                            .fillMaxSize()
-                            .background(Color.Gray.copy(alpha = 0.5f)),
-                        contentAlignment = Alignment.Center
-                    ) { Text("第三张图") }
-                    3 -> Box(
-                        Modifier
-                            .fillMaxSize()
-                            .background(Color.Cyan.copy(alpha = 0.5f)),
-                        contentAlignment = Alignment.Center
-                    ) { Text("第四张图") }
-                    4 -> Box(
-                        Modifier
-                            .fillMaxSize()
-                            .background(Color.Yellow.copy(alpha = 0.5f)),
-                        contentAlignment = Alignment.Center
-                    ) { Text("第五张图") }
-                    5 -> Box(
-                        Modifier
-                            .fillMaxSize()
-                            .background(Color.Transparent.copy(alpha = 0.5f)),
-                        contentAlignment = Alignment.Center
-                    ) { Text("第六张图") }
-                    else -> Box(
-                        Modifier
-                            .fillMaxSize()
-                            .background(Color.Green.copy(alpha = 0.5f)),
-                        contentAlignment = Alignment.Center
-                    ) { Text("其他图") }
-                }
-            }
-        }
-    }
-
 
     @OptIn(ExperimentalPagerApi::class)
     @Composable

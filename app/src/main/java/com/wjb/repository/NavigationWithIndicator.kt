@@ -35,7 +35,8 @@ enum class Direction {
 
 /**
  * 带滑块的导航指示器，可与HorizontalPager配合使用
- *
+ * @param backgroundColor 背景颜色
+ * @param size 指示器高度
  * @param titleList 标题列表
  * @param pagerState 滑动状态
  * @param scope 协程
@@ -44,6 +45,8 @@ enum class Direction {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun NavigationWithIndicator(
+    backgroundColor: Color = Color.Transparent,
+    size: Dp = 30.dp,
     titleList: List<String>,
     indicatorColor: Color = Color.Blue,
     pagerState: PagerState,
@@ -117,18 +120,25 @@ fun NavigationWithIndicator(
                     }
                     currentDirection = Direction.NONE
                     currentIndexOffset = offset
-                    offsetTarget=offset
+                    offsetTarget = offset
                 }
             }
         }
     }
 
-    Column(Modifier.fillMaxWidth()) {
-        Row(Modifier.fillMaxWidth()) {
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .height(size)
+            .background(backgroundColor)) {
+        Row(
+            Modifier
+                .fillMaxWidth().weight(1f)) {
             repeat(titleList.size) {
                 Box(
                     modifier = Modifier
                         .weight(1f)
+                        .fillMaxHeight()
                         .clickable(
                             indication = null,
                             interactionSource = MutableInteractionSource()
