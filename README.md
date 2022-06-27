@@ -1,5 +1,5 @@
 # ComposeRepository
-Compose控件仓库
+Compose控件仓库，现有Banner，BottomSelector，NavigationWithIndicator，FadeEdge，HideTopWhenScroll
 
 # Banner
 轮播图

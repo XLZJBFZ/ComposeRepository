@@ -33,47 +33,28 @@ import androidx.compose.ui.unit.dp
  */
 
 /**
- * Renders a scrollbar.
- *
- * <ul> <li> A scrollbar is composed of two components: a track and a knob. The knob moves across
- * the track <li> The scrollbar appears automatically when the user starts scrolling and disappears
- * after the scrolling is finished </ul>
- *
- * @param state The [LazyListState] that has been passed into the lazy list or lazy row
- * @param horizontal If `true`, this will be a horizontally-scrolling (left and right) scroll bar,
- * if `false`, it will be vertically-scrolling (up and down)
- * @param alignEnd If `true`, the scrollbar will appear at the "end" of the scrollable composable it
- * is decorating (at the right-hand side in left-to-right locales or left-hand side in right-to-left
- * locales, for the vertical scrollbars -or- the bottom for horizontal scrollbars). If `false`, the
- * scrollbar will appear at the "start" of the scrollable composable it is decorating (at the
- * left-hand side in left-to-right locales or right-hand side in right-to-left locales, for the
- * vertical scrollbars -or- the top for horizontal scrollbars)
- * @param thickness How thick/wide the track and knob should be
- * @param fixedKnobRatio If not `null`, the knob will always have this size, proportional to the
- * size of the track. You should consider doing this if the size of the items in the scrollable
- * composable is not uniform, to avoid the knob from oscillating in size as you scroll through the
- * list
- * @param knobCornerRadius The corner radius for the knob
- * @param trackCornerRadius The corner radius for the track
- * @param knobColor The color of the knob
- * @param trackColor The color of the track. Make it [Color.Transparent] to hide it
- * @param padding Edge padding to "squeeze" the scrollbar start/end in so it's not flush with the
- * contents of the scrollable composable it is decorating
- * @param visibleAlpha The alpha when the scrollbar is fully faded-in
- * @param hiddenAlpha The alpha when the scrollbar is fully faded-out. Use a non-`0` number to keep
- * the scrollbar from ever fading out completely
- * @param fadeInAnimationDurationMs The duration of the fade-in animation when the scrollbar appears
- * once the user starts scrolling
- * @param fadeOutAnimationDurationMs The duration of the fade-out animation when the scrollbar
- * disappears after the user is finished scrolling
- * @param fadeOutAnimationDelayMs Amount of time to wait after the user is finished scrolling before
- * the scrollbar begins its fade-out animation
+ * 可滚动控件的侧边滚动条
+ * @param state 控件使用的[LazyListState]
+ * @param horizontal 水平滚动填true，垂直滚动填false，默认为false
+ * @param alignEnd 填true为end侧，垂直滚动即右侧，默认为true
+ * @param thickness 滚动条的粗细，默认4dp
+ * @param fixedKnobRatio 滚动条的长度比例，若填写则为固定长度比例，不填写将随List的长度变化按比例变化，默认为null
+ * @param knobCornerRadius 滚动条的圆角，默认4dp，即两头为半圆
+ * @param trackCornerRadius 滚动条路径的圆角，默认2dp
+ * @param knobColor 滚动条颜色，默认为黑色
+ * @param trackColor 滚动条路径的颜色，默认为透明
+ * @param padding 滚动条路径上下两头的padding，默认为0dp
+ * @param visibleAlpha 滚动条显示时的透明度，默认为1f
+ * @param hiddenAlpha 滚动条隐藏时的透明度，默认为0f
+ * @param fadeInAnimationDurationMs 滚动条从隐藏到显示的时间，单位为ms，默认为150ms
+ * @param fadeOutAnimationDurationMs 滚动条从显示到隐藏的时间，单位为ms，默认500ms
+ * @param fadeOutAnimationDelayMs 滚动条从用户不操作到开始隐藏的时间，单位为ms，默认为1000ms
  */
 
 
 fun Modifier.scrollBar(
     state: LazyListState,
-    horizontal: Boolean,
+    horizontal: Boolean = false,
     alignEnd: Boolean = true,
     thickness: Dp = 4.dp,
     fixedKnobRatio: Float? = null,
