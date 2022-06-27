@@ -5,8 +5,9 @@ Compose控件仓库，现有Banner，BottomSelector，NavigationWithIndicator，
 轮播图
 
 # BottomSelector
-![image](https://github.com/XLZJBFZ/ComposeRepository/blob/master/img/BottomSelector.gif)
 底部选择器，可用于地区选择
+![image](https://github.com/XLZJBFZ/ComposeRepository/blob/master/img/BottomSelector.gif)
+![image](https://github.com/XLZJBFZ/ComposeRepository/blob/master/img/BottomSelector.png)
 
 
 # NavigationWithIndicator
