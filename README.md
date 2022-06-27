@@ -6,7 +6,7 @@ Compose控件仓库，现有Banner，BottomSelector，NavigationWithIndicator，
 
 # BottomSelector
 底部选择器，可用于地区选择
-![image](img/BottomSelector.gif)
+![image](https://github.com/XLZJBFZ/ComposeRepository/blob/master/img/BottomSelector.gif)
 
 # NavigationWithIndicator
 
