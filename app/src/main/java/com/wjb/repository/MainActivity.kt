@@ -7,6 +7,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,6 +23,7 @@ import androidx.compose.material.icons.filled.MyLocation
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -171,7 +173,10 @@ class MainActivity : ComponentActivity() {
     @Composable
     private fun FadeEdgeSample(navController: NavHostController) {
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            LazyRow(Modifier.fillMaxWidth().horizontalFadeEdge(fadeWidth = 50.dp)){
+            LazyRow(
+                Modifier
+                    .fillMaxWidth()
+                    .horizontalFadeEdge(fadeWidth = 50.dp)){
                 items(20){
                     Text(text = it.toString(),modifier=Modifier.width(50.dp))
                 }
