@@ -6,7 +6,7 @@ Compose控件仓库，现有Banner，BottomSelector，NavigationWithIndicator，
 
 # BottomSelector
 底部选择器，可用于地区选择
-![image](https://pan-yz.chaoxing.com/external/m/file/748272616507637760)
+![image](http://imageproxy.chaoxing.com/0x0,q15,jpeg,szZQVwUgCychsn8TpRSgVXFCSL2vrkqrTiXv53f4NJWw/https://p.ananas.chaoxing.com/star3/origin/6aab069444af74b0d000e33cab399452.png)
 ![image](https://github.com/XLZJBFZ/ComposeRepository/blob/master/img/BottomSelector.png)
 ![image](https://raw.githubusercontent.com/XLZJBFZ/ComposeRepository/master/img/BottomSelector.png)
 
