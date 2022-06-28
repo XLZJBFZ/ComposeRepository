@@ -40,56 +40,46 @@ import kotlin.math.absoluteValue
 @Composable
 fun Banner(
     modifier: Modifier = Modifier,
-    indicatorSize: Dp =4.dp,
-    indicatorColor:Color=Color.Red,
+    indicatorSize: Dp = 4.dp,
+    indicatorColor: Color = Color.Red,
     pageCount: Int,
     waitingTime: Long = 2000L,
     content: @Composable PagerScope.(page: Int) -> Unit
 ) {
-    val startIndex = 1000000
-    val state = rememberPagerState(startIndex)
-    rememberPagerState()
-
-    var currentIndex by remember {
-        mutableStateOf(startIndex)
-    }
-    var currentPage by remember {
-        mutableStateOf(0)
-    }
-    var lastIndex by remember {
-        mutableStateOf(startIndex)
-    }
+    val state = rememberPagerState(1)
     var wait by remember {
         mutableStateOf(false)
     }
-    LaunchedEffect(currentPage, wait) {
+    LaunchedEffect(wait) {
         if (!state.isScrollInProgress) {
             delay(waitingTime)
             if (!state.isScrollInProgress) {
                 state.animateScrollToPage(state.currentPage + 1)
-            } else {
-                wait = !wait
             }
-        } else {
-            delay(100)
-            wait = !wait
         }
+        wait = !wait
     }
 
     LaunchedEffect(state.currentPage) {
-        delay(200)
-        when {
-            lastIndex < state.currentPage -> currentIndex++
-            lastIndex > state.currentPage -> currentIndex--
+        when (state.currentPage) {
+            0 -> {
+                state.scrollToPage(pageCount)
+                wait = !wait
+            }
+            pageCount + 1 -> {
+                state.scrollToPage(1)
+                wait = !wait
+            }
         }
-        lastIndex = state.currentPage
-        currentPage = (currentIndex-startIndex).floorMod(pageCount)
     }
 
     Box(modifier = modifier, contentAlignment = Alignment.BottomCenter) {
-        HorizontalPager(count = 2000000, state = state) { pager ->
-            val page = (pager - startIndex).floorMod(pageCount)
-            content(page)
+        HorizontalPager(count = pageCount + 2, state = state) {
+            when (it) {
+                0 -> content(pageCount)
+                pageCount + 1 -> content(1)
+                else -> content(it)
+            }
         }
         Row(
             Modifier
@@ -101,25 +91,22 @@ fun Banner(
                     modifier = Modifier
                         .size(indicatorSize)
                         .clip(CircleShape)
-                        .background(if (it == currentPage) indicatorColor else Color.White)
+                        .background(
+                            if (it + 1 == when (state.currentPage) {
+                                    0 -> pageCount
+                                    pageCount + 1 -> 1
+                                    else -> state.currentPage
+                                }
+                            ) indicatorColor else Color.White
+                        )
                 )
-                if(it!=pageCount-1){
+                if (it != pageCount - 1) {
                     Spacer(modifier = Modifier.size(indicatorSize))
                 }
 
             }
         }
     }
-}
-
-private fun Int.toPage(pageCount: Int): Int = when {
-    this >= 0 -> this % pageCount
-    else -> pageCount - this.absoluteValue % pageCount
-}
-
-private fun Int.floorMod(other: Int): Int = when (other) {
-    0 -> this
-    else -> this - floorDiv(other) * other
 }
 
 @OptIn(ExperimentalPagerApi::class)
@@ -130,52 +117,14 @@ private fun PreviewBanner() {
         modifier = Modifier
             .width(200.dp)
             .height(100.dp),
-        pageCount = 6
+        pageCount = 4
     ) {
-        when (it) {
-            0 -> Box(
-                Modifier
-                    .fillMaxSize()
-                    .background(Color.Green.copy(alpha = 0.5f)).border(BorderStroke(1.dp, Color.Black)),
-                contentAlignment = Alignment.Center
-            ) { Text("第一张图") }
-            1 -> Box(
-                Modifier
-                    .fillMaxSize()
-                    .background(Color.Green.copy(alpha = 0.5f)).border(BorderStroke(1.dp, Color.Black)),
-                contentAlignment = Alignment.Center
-            ) { Text("第二张图") }
-            2 -> Box(
-                Modifier
-                    .fillMaxSize()
-                    .background(Color.Green.copy(alpha = 0.5f)).border(BorderStroke(1.dp, Color.Black)),
-                contentAlignment = Alignment.Center
-            ) { Text("第三张图") }
-            3 -> Box(
-                Modifier
-                    .fillMaxSize()
-                    .background(Color.Green.copy(alpha = 0.5f)).border(BorderStroke(1.dp, Color.Black)),
-                contentAlignment = Alignment.Center
-            ) { Text("第四张图") }
-            4 -> Box(
-                Modifier
-                    .fillMaxSize()
-                    .background(Color.Green.copy(alpha = 0.5f)).border(BorderStroke(1.dp, Color.Black)),
-                contentAlignment = Alignment.Center
-            ) { Text("第五张图") }
-            5 -> Box(
-                Modifier
-                    .fillMaxSize()
-                    .background(Color.Green.copy(alpha = 0.5f)).border(BorderStroke(1.dp, Color.Black)),
-                contentAlignment = Alignment.Center
-            ) { Text("第六张图") }
-            else -> Box(
-                Modifier
-                    .fillMaxSize()
-                    .background(Color.Green.copy(alpha = 0.5f)).border(BorderStroke(1.dp, Color.Black)),
-                contentAlignment = Alignment.Center
-            ) { Text("其他图") }
-        }
+        Box(
+            Modifier
+                .fillMaxSize()
+                .background(Color.Green.copy(alpha = 0.5f))
+                .border(BorderStroke(1.dp, Color.Black)),
+            contentAlignment = Alignment.Center
+        ) { Text("第${it}张图") }
     }
 }
-
