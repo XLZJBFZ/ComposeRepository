@@ -250,5 +250,4 @@ fun PreviewLongPressWithProgress() {
                 .background(Color.Black)
                 .clickable { finished = false })
     }
-
 }
