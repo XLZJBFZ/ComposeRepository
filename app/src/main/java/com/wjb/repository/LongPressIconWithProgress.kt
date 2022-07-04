@@ -33,25 +33,31 @@ import androidx.compose.ui.unit.dp
  * 带进度的长按Icon，进度完成后Icon会弹一下
  *
  * @param modifier 应用在最外层的modifier，Icon占0.7f
+ * @param originalSize 初始Icon占比，0~1f
+ * @param bounceSize 弹跳时Icon占比，0~1f
  * @param finished 是否进度完成，false时进度条会显示，true时进度条不显示
  * @param imageVector Icon图片来源
  * @param iconColor Icon颜色
  * @param progressTime 进度时间长度，单位为ms
  * @param progressIndicatorColor 进度条颜色
+ * @param snapWhenCancel 取消时是否直接清零进度
  * @param onProgressFinished 进度完成回调
  */
 @Composable
 fun LongPressIconWithProgress(
     modifier: Modifier = Modifier,
+    originalSize: Float = 0.7f,
+    bounceSize: Float = 0.8f,
     finished: Boolean,
     imageVector: ImageVector,
     iconColor: Color = LocalContentColor.current,
     progressTime: Int = 2000,
     progressIndicatorColor: Color = Color.Red.copy(0.7f),
+    snapWhenCancel: Boolean = true,
     onProgressFinished: () -> Unit
 ) {
     var targetSize by remember {
-        mutableStateOf(0.7f)
+        mutableStateOf(originalSize)
     }
     var targetProcess by remember {
         mutableStateOf(0f)
@@ -62,37 +68,37 @@ fun LongPressIconWithProgress(
     val size by animateFloatAsState(targetValue = targetSize)
     val progress by animateFloatAsState(
         targetValue = targetProcess,
-        animationSpec = if(forward) tween(progressTime) else snap()
+        animationSpec = if (forward) tween(progressTime) else snap()
     )
     LaunchedEffect(progress) {
         if (progress == 1f && !finished) {
-            targetSize = 0.8f
+            targetSize = bounceSize
             onProgressFinished()
         }
     }
-    if (size == 0.8f) {
-        targetSize = 0.7f
+    if (size == bounceSize) {
+        targetSize = originalSize
     }
     Box(modifier, contentAlignment = Alignment.Center) {
         Icon(
             modifier = Modifier
                 .fillMaxSize(size)
                 .pointerInput(Unit) {
-                    if (!finished) {
-                        detectTapGestures(onPress = {
-                            forward = true
-                            targetProcess = 1f
-                            awaitRelease()
-                            targetProcess = 0f
+                    detectTapGestures(onPress = {
+                        forward = true
+                        targetProcess = 1f
+                        awaitRelease()
+                        targetProcess = 0f
+                        if (snapWhenCancel) {
                             forward = false
-                        })
-                    }
+                        }
+                    })
                 },
             imageVector = imageVector,
             contentDescription = "",
             tint = iconColor
         )
-        if(!finished){
+        if (!finished) {
             CircularProgressIndicator(
                 modifier = Modifier.fillMaxSize(0.8f),
                 color = progressIndicatorColor,
@@ -106,15 +112,18 @@ fun LongPressIconWithProgress(
 @Composable
 fun LongPressIconWithProgress(
     modifier: Modifier = Modifier,
+    originalSize: Float = 0.7f,
+    bounceSize: Float = 0.8f,
     finished: Boolean,
     bitmap: ImageBitmap,
     progressTime: Int = 2000,
     iconColor: Color = LocalContentColor.current,
     progressIndicatorColor: Color = Color.Red.copy(0.7f),
+    snapWhenCancel: Boolean = true,
     onProgressFinished: () -> Unit
 ) {
     var targetSize by remember {
-        mutableStateOf(0.7f)
+        mutableStateOf(originalSize)
     }
     var targetProcess by remember {
         mutableStateOf(0f)
@@ -125,16 +134,16 @@ fun LongPressIconWithProgress(
     val size by animateFloatAsState(targetValue = targetSize)
     val progress by animateFloatAsState(
         targetValue = targetProcess,
-        animationSpec = if(forward) tween(progressTime) else snap()
+        animationSpec = if (forward) tween(progressTime) else snap()
     )
     LaunchedEffect(progress) {
         if (progress == 1f && !finished) {
-            targetSize = 0.8f
+            targetSize = bounceSize
             onProgressFinished()
         }
     }
-    if (size == 0.8f) {
-        targetSize = 0.7f
+    if (size == bounceSize) {
+        targetSize = originalSize
     }
     Box(modifier, contentAlignment = Alignment.Center) {
         Icon(
@@ -147,7 +156,9 @@ fun LongPressIconWithProgress(
                             targetProcess = 1f
                             awaitRelease()
                             targetProcess = 0f
-                            forward = false
+                            if (snapWhenCancel) {
+                                forward = false
+                            }
                         })
                     }
                 },
@@ -155,7 +166,7 @@ fun LongPressIconWithProgress(
             contentDescription = "",
             tint = iconColor
         )
-        if(!finished){
+        if (!finished) {
             CircularProgressIndicator(
                 modifier = Modifier.fillMaxSize(0.8f),
                 color = progressIndicatorColor,
@@ -169,15 +180,18 @@ fun LongPressIconWithProgress(
 @Composable
 fun LongPressIconWithProgress(
     modifier: Modifier = Modifier,
+    originalSize: Float = 0.7f,
+    bounceSize: Float = 0.8f,
     finished: Boolean,
     painter: Painter,
     progressTime: Int = 2000,
     iconColor: Color = LocalContentColor.current,
     progressIndicatorColor: Color = Color.Red.copy(0.7f),
+    snapWhenCancel: Boolean = true,
     onProgressFinished: () -> Unit
 ) {
     var targetSize by remember {
-        mutableStateOf(0.7f)
+        mutableStateOf(originalSize)
     }
     var targetProcess by remember {
         mutableStateOf(0f)
@@ -188,16 +202,16 @@ fun LongPressIconWithProgress(
     val size by animateFloatAsState(targetValue = targetSize)
     val progress by animateFloatAsState(
         targetValue = targetProcess,
-        animationSpec = if(forward) tween(progressTime) else snap()
+        animationSpec = if (forward) tween(progressTime) else snap()
     )
     LaunchedEffect(progress) {
         if (progress == 1f && !finished) {
-            targetSize = 0.8f
+            targetSize = bounceSize
             onProgressFinished()
         }
     }
-    if (size == 0.8f) {
-        targetSize = 0.7f
+    if (size == bounceSize) {
+        targetSize = originalSize
     }
     Box(modifier, contentAlignment = Alignment.Center) {
         Icon(
@@ -210,7 +224,9 @@ fun LongPressIconWithProgress(
                             targetProcess = 1f
                             awaitRelease()
                             targetProcess = 0f
-                            forward = false
+                            if (snapWhenCancel) {
+                                forward = false
+                            }
                         })
                     }
                 },
@@ -218,7 +234,7 @@ fun LongPressIconWithProgress(
             contentDescription = "",
             tint = iconColor
         )
-        if(!finished){
+        if (!finished) {
             CircularProgressIndicator(
                 modifier = Modifier.fillMaxSize(0.8f),
                 color = progressIndicatorColor,

@@ -17,10 +17,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Download
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.MyLocation
-import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -102,6 +99,13 @@ class MainActivity : ComponentActivity() {
                     Text(text = "HideTopWhenScrollSample")
                 }
             }
+            item {
+                Button(modifier = Modifier.fillMaxWidth(), onClick = {
+                    navController.navigate(route = RouteConfig.ROUTE_LONG_PRESS_ICON_WITH_PROGRESS)
+                }) {
+                    Text(text = "LongPressIconWithProgressSample")
+                }
+            }
         }
     }
 
@@ -167,6 +171,16 @@ class MainActivity : ComponentActivity() {
                 }) {
                 HideTopWhenScrollSample(navController)
             }
+
+            composable(RouteConfig.ROUTE_LONG_PRESS_ICON_WITH_PROGRESS,
+                enterTransition = {
+                    fadeIn(animationSpec = tween(500))
+                },
+                exitTransition = {
+                    fadeOut(animationSpec = tween(500))
+                }) {
+                LongPressIconWithProgressSample(navController)
+            }
         }
     }
 
@@ -209,7 +223,24 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                 }
+            }
+        }
+    }
 
+    @OptIn(ExperimentalPagerApi::class)
+    @Composable
+    private fun LongPressIconWithProgressSample(navController: NavHostController) {
+        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            var finished by remember {
+                mutableStateOf(false)
+            }
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                LongPressIconWithProgress(modifier = Modifier.size(100.dp),finished = finished, imageVector = Icons.Filled.Star, iconColor = Color.Red) {
+                    finished=true
+                }
+                Button(onClick = { finished=false }) {
+                    Text(text = "取消进度")
+                }
             }
 
         }

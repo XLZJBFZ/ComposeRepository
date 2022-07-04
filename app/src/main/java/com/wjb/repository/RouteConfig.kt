@@ -12,5 +12,6 @@ object RouteConfig {
     const val ROUTE_BANNER="Banner"
     const val ROUTE_FADE_EDGE="FadeEdge"
     const val ROUTE_HIDE_TOP_WHEN_SCROLL="HideTopWhenScroll"
+    const val ROUTE_LONG_PRESS_ICON_WITH_PROGRESS="LongPressIconWithProgress"
 
 }
