@@ -155,17 +155,15 @@ fun LongPressIconWithProgress(
             modifier = Modifier
                 .fillMaxSize(size)
                 .pointerInput(Unit) {
-                    if (!finished) {
-                        detectTapGestures(onPress = {
-                            forward = true
-                            targetProcess = 1f
-                            awaitRelease()
-                            targetProcess = 0f
-                            if (snapWhenCancel) {
-                                forward = false
-                            }
-                        })
-                    }
+                    detectTapGestures(onPress = {
+                        forward = true
+                        targetProcess = 1f
+                        awaitRelease()
+                        targetProcess = 0f
+                        if (snapWhenCancel) {
+                            forward = false
+                        }
+                    })
                 },
             bitmap = bitmap,
             contentDescription = "",
@@ -225,17 +223,15 @@ fun LongPressIconWithProgress(
             modifier = Modifier
                 .fillMaxSize(size)
                 .pointerInput(Unit) {
-                    if (!finished) {
-                        detectTapGestures(onPress = {
-                            forward = true
-                            targetProcess = 1f
-                            awaitRelease()
-                            targetProcess = 0f
-                            if (snapWhenCancel) {
-                                forward = false
-                            }
-                        })
-                    }
+                    detectTapGestures(onPress = {
+                        forward = true
+                        targetProcess = 1f
+                        awaitRelease()
+                        targetProcess = 0f
+                        if (snapWhenCancel) {
+                            forward = false
+                        }
+                    })
                 },
             painter = painter,
             contentDescription = "",
