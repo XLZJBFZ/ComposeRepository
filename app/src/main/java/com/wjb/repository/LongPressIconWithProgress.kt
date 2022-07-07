@@ -1,5 +1,6 @@
 package com.wjb.repository
 
+import androidx.annotation.FloatRange
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.tween
@@ -46,7 +47,9 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun LongPressIconWithProgress(
     modifier: Modifier = Modifier,
+    @FloatRange(from = 0.0, to = 1.0)
     originalSize: Float = 0.7f,
+    @FloatRange(from = 0.0, to = 1.0)
     bounceSize: Float = 0.8f,
     finished: Boolean,
     imageVector: ImageVector,
@@ -112,7 +115,9 @@ fun LongPressIconWithProgress(
 @Composable
 fun LongPressIconWithProgress(
     modifier: Modifier = Modifier,
+    @FloatRange(from = 0.0, to = 1.0)
     originalSize: Float = 0.7f,
+    @FloatRange(from = 0.0, to = 1.0)
     bounceSize: Float = 0.8f,
     finished: Boolean,
     bitmap: ImageBitmap,
@@ -180,7 +185,9 @@ fun LongPressIconWithProgress(
 @Composable
 fun LongPressIconWithProgress(
     modifier: Modifier = Modifier,
+    @FloatRange(from = 0.0, to = 1.0)
     originalSize: Float = 0.7f,
+    @FloatRange(from = 0.0, to = 1.0)
     bounceSize: Float = 0.8f,
     finished: Boolean,
     painter: Painter,
